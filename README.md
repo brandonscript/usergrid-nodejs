@@ -66,6 +66,7 @@ There are two different ways of initializing the Usergrid Node.js SDK:
 	var Usergrid = require('usergrid')
 	Usergrid.init() // defaults to use config.json
 	```
+    **Config File Location:** Note that the config file needs to be stored under /config in your app root, and named usergrid.json.
     
 2. The instance pattern enables the developer to manage instances of the Usergrid client independently and in an isolated fashion. The primary use-case for this is when an application connects to multiple Usergrid targets.
 
