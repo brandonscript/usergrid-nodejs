@@ -19,15 +19,30 @@ var _ = require('lodash')
 var Usergrid = {
     isInitialized: false,
     isSharedInstance: true,
-    initSharedInstance: function(options) {
+    UsergridAppAuth: require('./lib/appAuth'),
+    UsergridAsset: require('./lib/asset'),
+    UsergridAuth: require('./lib/auth'),
+    UsergridClient: require('./lib/client'),
+    UsergridEntity: require('./lib/entity'),
+    UsergridQuery: require('./lib/query'),
+    UsergridRequest: require('./lib/request'),
+    UsergridResponse: require('./lib/response'),
+    UsergridResponseError: require('./lib/responseError'),
+    UsergridUser: require('./lib/user'),
+    UsergridUserAuth: require('./lib/userAuth'),
+        initSharedInstance: function() {
+        var args = Array.prototype.slice.call(arguments)
         var self = this
         if (self.isInitialized) {
             console.log('Usergrid shared instance is already initialized')
             return self
         }
         var UsergridClient = require('./lib/client')
-        Object.setPrototypeOf(self, new UsergridClient(options))
-        _.assign(self, new UsergridClient(options))
+        console.log('parent', args)
+        args.unshift(null)
+        var client = Function.prototype.bind.apply(UsergridClient, args)
+        _.assign(self, client)
+        Object.setPrototypeOf(self, new client())
         self.isInitialized = true
         self.isSharedInstance = true
     }
